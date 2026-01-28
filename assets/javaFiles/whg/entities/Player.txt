@@ -1,0 +1,97 @@
+//Max
+//Program Description:
+//May 9, 2025
+//
+package entities;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+
+import main.Game;
+
+public class Player {
+   private float x, y;
+   private float dx, dy;
+   private int w, h;
+   private boolean up, down, left, right;
+   private Rectangle.Float bounds;
+   private boolean canMoveUp, canMoveDown, canMoveLeft, canMoveRight;
+   public static Color color;
+
+   public Player(float x, float y, float dx, float dy) {
+      this.x = x;
+      this.y = y;
+      this.dx = dx;
+      this.dy = dy;
+      w = 15;
+      h = 15;
+      up = down = left = right = false;
+      canMoveUp = canMoveDown = canMoveLeft = canMoveRight = true;
+      bounds = new Rectangle.Float(x, y, w, h);
+      color = Color.RED;
+   }
+   
+   public void update() {
+      bounds = new Rectangle.Float(x, y, w, h);
+      if (x + w > Game.PANEL_WIDTH) canMoveRight = false;
+      if (x < 0) canMoveLeft = false;
+      if (y + h > Game.PANEL_HEIGHT) canMoveDown = false;
+      if (y < 0) canMoveUp = false;
+      if (up && canMoveUp) y -= dy;
+      if (down && canMoveDown) y += dy;
+      if (left && canMoveLeft) x -= dx;
+      if (right && canMoveRight) x += dx;
+   }
+   
+   public void render(Graphics g) {
+      g.setColor(new Color(100, 0, 0));
+      g.fillRect((int) x, (int) y, w, h);
+      g.setColor(color);
+      g.fillRect((int) x + 2, (int) y + 2, w - 4, h - 4);
+   }
+   
+   public void setUp(boolean b) {
+      up = b;
+   }
+   
+   public void setDown(boolean b) {
+      down = b;
+   }
+   
+   public void setLeft(boolean b) {
+      left = b;
+   }
+   
+   public void setRight(boolean b) {
+      right = b;
+   }
+
+   public void setCanMoveUp(boolean b) {
+      canMoveUp = b;
+   }
+   
+   public void setCanMoveDown(boolean b) {
+      canMoveDown = b;
+   }
+   
+   public void setCanMoveLeft(boolean b) {
+      canMoveLeft = b;
+   }
+   
+   public void setCanMoveRight(boolean b) {
+      canMoveRight = b;
+   }
+   
+   public void setToSpawn() {
+      x = 150 - w/2;
+      y = 350 - w/2;
+      up = down = left = right = false;
+      Game.addToDeaths();
+   }
+   
+   public Rectangle.Float getBounds() {
+      return bounds;
+   }
+   
+}

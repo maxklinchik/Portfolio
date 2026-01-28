@@ -1,0 +1,126 @@
+//Max
+//Program Description:
+//May 9, 2025
+//
+package ui;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+
+import gamestates.Gamestate;
+import gamestates.levels.Level1;
+
+public class Button {
+   //0 is untouched, 1 is hover above, 2 is clicked
+   private int stateIndex;
+   private int x, y, w, h;
+   private String text;
+   private Gamestate gamestate;
+   private Rectangle bounds;
+   private boolean mouseOver = false;
+   private boolean mousePressed = false;
+   private int buttonActionIndex;
+   private boolean isClickable = true;
+
+   public Button(int x, int y, int width, int height, Gamestate gamestate, String text) {
+      stateIndex = 0;
+      this.x = x;
+      this.y = y;
+      this.w = width;
+      this.h = height;
+      this.text = text;
+      this.gamestate = gamestate;
+      this.buttonActionIndex = 0;
+      initializeBounds();
+   }
+   
+   public Button(int x, int y, int width, int height, String text) {
+      stateIndex = 0;
+      this.x = x;
+      this.y = y;
+      this.w = width;
+      this.h = height;
+      this.text = text;
+      this.buttonActionIndex = 0;
+      initializeBounds();
+   }
+   
+   private void initializeBounds() {
+      bounds = new Rectangle(x, y, w, h);
+   }
+   
+   public void update() {
+      stateIndex = 0;
+      if (mouseOver) stateIndex = 1;
+      if (mousePressed) stateIndex = 2;
+   }
+   
+   public void render(Graphics g) {
+      g.setFont(new Font("Cooper Black", Font.BOLD, 30));
+      if (stateIndex == 0) {
+         g.setColor(new Color(230, 230, 230));
+         g.fillRect(x, y, w, h);
+         g.setColor(Color.BLACK);
+         g.drawString(text, x + 5, y + h/2 + 5);
+      }
+      if (stateIndex == 1) {
+         g.setColor(new Color(210, 210, 210));
+         g.fillRect(x, y, w, h);
+         g.setColor(Color.BLACK);
+         g.drawString(text, x + 5, y + h/2 + 5);
+      }
+      if (stateIndex == 2) {
+         g.setColor(new Color(210, 210, 210));
+         g.fillRect(x + 5, y + 5, w, h);
+         g.setColor(Color.BLACK);
+         g.drawString(text, x + 10, y + h/2 + 10);
+      }
+      if (!isClickable) {
+         g.setColor(new Color(110, 110, 110));
+         g.fillRect(x, y, w, h);
+         g.setColor(Color.BLACK);
+         g.drawString(text, x + 5, y + h/2 + 5);
+      }
+   }
+   
+   public boolean getMouseOver() {
+      return mouseOver;
+   }
+   
+   public boolean getMousePressed() {
+      return mousePressed;
+   }
+   
+   public void setMouseOver(boolean b) {
+      mouseOver = b;
+   }
+   
+   public void setMousePressed(boolean b) {
+      mousePressed = b;
+   }
+   
+   public void applyGamestate() {
+      Gamestate.gamestate = this.gamestate;
+      buttonActionIndex++;
+   }
+   
+   public void resetBooleans() {
+      mousePressed = false;
+      mouseOver = false;
+   }
+   
+   public Rectangle getBounds() {
+      return bounds;
+   }
+   
+   public void setClickable(boolean b) {
+      isClickable = b;
+   }
+   
+   public boolean getClickable() {
+      return isClickable;
+   }
+   
+}

@@ -1,0 +1,150 @@
+//Max
+//Program Description:
+//May 9, 2025
+//
+package entities;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+
+import main.Game;
+
+public class Barrier {
+   private float x, y;
+   private int w, h;
+   private float dx, dy;
+   private Rectangle.Float bounds;
+   private int centerX, centerY;
+   private int radius;
+   private float angle = 0;
+   private double angleSpeed = 0;
+   public static Color color;
+
+   public Barrier(float x, float y, int width, int height) {
+      this.x = x;
+      this.y = y;
+      this.w = width;
+      this.h = height;
+      dx = 0;
+      dy = 0;
+      bounds = new Rectangle.Float(x, y, w, h);
+      color = Color.RED;
+   }
+   
+   public Barrier(float x, float y, int width, int height, int r, int cx, int cy, float angle, double angleSpeed) {
+      this.x = x;
+      this.y = y;
+      this.w = width;
+      this.h = height;
+      dx = 0;
+      dy = 0;
+      this.angleSpeed = angleSpeed;
+      this.angle = angle;
+      this.radius = r;
+      this.centerX = cx;
+      this.centerY = cy;
+      bounds = new Rectangle.Float(x, y, w, h);
+      color = Color.RED;
+   }
+   
+   public Barrier(float x, float y, int width, int height, float dx, float dy) {
+      this.x = x;
+      this.y = y;
+      this.w = width;
+      this.h = height;
+      this.dx = dx;
+      this.dy = dy;
+      bounds = new Rectangle.Float(x, y, w, h);
+      color = Color.RED;
+   }
+   
+   public void update() {
+      if (angle > 360) angle = 0;
+      angle += angleSpeed;
+      x += dx;
+      y += dy;
+      bounds = new Rectangle.Float(x, y, w, h);
+   }
+   
+   public void renderSquare(Graphics g) {
+      g.setColor(new Color(0, 0, 100));
+      g.fillRect((int) x, (int) y, w, h);
+      g.setColor(color);
+      g.fillRect((int) x + 4, (int) y + 4, w - 8, h - 8);
+   }
+   
+   public void renderCircle(Graphics g) {
+      g.setColor(color);
+      g.fillOval((int) x, (int) y, w, h);
+   }
+   
+   public Rectangle.Float getBounds() {
+      return bounds;
+   }
+   
+   public void setDx(float n) {
+      dx = n;
+   }
+   
+   public void setDy(float n) {
+      dy = n;
+   }
+   
+   public void setX(float n) {
+      x = n;
+   }
+   
+   public void setY(float n) {
+      y = n;
+   }
+   
+   public void changeSignOfDx() {
+      dx *= -1;
+   }
+   
+   public void changeSignOfDy() {
+      dy *= -1;
+   }
+   
+   public float getX() {
+      return x;
+   }
+   
+   public float getY() {
+      return y;
+   }
+   
+   public int getW() {
+      return w;
+   }
+   
+   public int getH() {
+      return h;
+   }
+   
+   public int getCenterX() {
+      return centerX;
+   }
+   
+   public int getCenterY() {
+      return centerY;
+   }
+   
+   public int getRadius() {
+      return radius;
+   }
+   
+   public float getAngle() {
+      return angle;
+   }
+   
+   public void setWidth(int n) {
+      w = n;
+   }
+   
+   public void setHeight(int n) {
+      h = n;
+   }
+   
+ }

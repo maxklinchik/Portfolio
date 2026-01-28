@@ -1,0 +1,74 @@
+package utilities;
+
+import java.awt.Rectangle;
+import java.util.ArrayList;
+
+import entities.Player;
+import entities.Wall;
+
+public class HelpMethods {
+
+   public static boolean isIn(Rectangle.Float a, Rectangle.Float b) {
+      if (a.x + a.width >= b.x)
+         if (a.x <= b.x + b.width)
+            if (a.y + a.height >= b.y)
+               if (a.y <= b.y + b.height)
+                  return true;
+      
+      return false;
+   }
+   
+   public static boolean isOnLeft(Rectangle.Float a, Rectangle.Float b) {
+      if (isIn(a, b))
+         if (a.x < b.x)
+            return true;
+      return false;
+   }
+   
+   public static boolean isOnRight(Rectangle.Float a, Rectangle.Float b) {
+      if (isIn(a, b))
+         if (a.x >= b.x + b.width - 3)
+            return true;
+      return false;
+   }
+   
+   public static boolean isAbove(Rectangle.Float a, Rectangle.Float b) {
+      if (isIn(a, b))
+         if (a.y < b.y)
+            return true;
+      return false;
+   }
+   
+   public static boolean isBelow(Rectangle.Float a, Rectangle.Float b) {
+      if (isIn(a, b))
+         if (a.y >= b.y + b.height - 3)
+            return true;
+      return false;
+   }
+   
+   public static boolean checkForNoPlayerContactAboveWall(Rectangle.Float a, ArrayList<Wall> walls, int index) {
+      //returns true if theres no contact above the wall
+      if (index >= walls.size()) return true;
+      return !HelpMethods.isAbove(a, walls.get(index).getBounds()) && checkForNoPlayerContactAboveWall(a, walls, index+1);
+   }
+   
+   public static boolean checkForNoPlayerContactBelowWall(Rectangle.Float a, ArrayList<Wall> walls, int index) {
+      //returns true if theres no contact below the wall
+      if (index >= walls.size()) return true;
+      return !HelpMethods.isBelow(a, walls.get(index).getBounds()) && checkForNoPlayerContactBelowWall(a, walls, index+1);
+   }
+   
+   public static boolean checkForNoPlayerContactOnLeftOfWall(Rectangle.Float a, ArrayList<Wall> walls, int index) {
+      //returns true if theres no contact to the left of the wall
+      if (index >= walls.size()) return true;
+      return !HelpMethods.isOnLeft(a, walls.get(index).getBounds()) && checkForNoPlayerContactOnLeftOfWall(a, walls, index+1);
+   }
+   
+   public static boolean checkForNoPlayerContactOnRightOfWall(Rectangle.Float a, ArrayList<Wall> walls, int index) {
+      //returns true if theres no contact to the right of the wall
+      if (index >= walls.size()) return true;
+      return !HelpMethods.isOnRight(a, walls.get(index).getBounds()) && checkForNoPlayerContactOnRightOfWall(a, walls, index+1);
+   }
+   
+   
+}

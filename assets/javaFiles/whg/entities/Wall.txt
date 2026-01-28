@@ -1,0 +1,39 @@
+//Max
+//Program Description:
+//May 12, 2025
+//
+package entities;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+
+public class Wall {
+   private float x, y;
+   private int w, h;
+   private Rectangle.Float hitbox;
+
+   public Wall(float x, float y, int width, int height) {
+      this.x = x;
+      this.y = y;
+      this.w = width;
+      this.h = height;
+      hitbox = new Rectangle.Float(x, y, w, h);
+   }
+   
+   public void update() {
+      hitbox = new Rectangle.Float(x, y, w, h);
+   }
+   
+   public void render(Graphics g) {
+      g.setColor(Color.DARK_GRAY);
+      g.fillRect((int) x, (int) y, w, h);
+      g.setColor(Color.GRAY);
+      g.fillRect((int) x + 4, (int) y + 4, w - 8, h - 8);
+   }
+   
+   public Rectangle.Float getBounds() {
+      return hitbox;
+   }
+   
+}

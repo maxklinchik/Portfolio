@@ -1,0 +1,82 @@
+//Max
+//Program Description:
+//May 8, 2025
+//
+package gamestates;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+
+import gamestates.Gamestate;
+import main.Game;
+import ui.Button;
+
+public class Menu extends StateMethods implements State {
+   private Button[] buttons = new Button[3];
+
+   public Menu() {
+      loadButtons();
+   }
+   
+   private void loadButtons() {
+      buttons[0] = new Button(Game.PANEL_WIDTH/2 - 125, 100, 250, 60, Gamestate.LEVEL_CHOOSER, "Play");
+      buttons[1] = new Button(Game.PANEL_WIDTH/2 - 125, 170, 250, 60, Gamestate.OPTIONS, "Options");
+      buttons[2] = new Button(Game.PANEL_WIDTH/2 - 125, 240, 250, 60, Gamestate.QUIT, "Quit");
+   }
+   
+   public void update() {
+      for (Button b : buttons) b.update();
+   }
+   
+   public void render(Graphics g) {
+      g.setColor(Color.GRAY);
+      g.fillRect(0, 0, 1200, 700);
+      for (Button b : buttons) b.render(g);
+   }
+
+   @Override
+   public void keyPressed(KeyEvent e) {
+//      if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+//         Gamestate.gamestate = Gamestate.LEVEL1;
+//      }
+   }
+
+   @Override
+   public void keyReleased(KeyEvent e) {
+      
+   }
+
+   @Override
+   public void mousePressed(MouseEvent e) {
+      for (Button b : buttons)
+         if (isIn(e, b)) {
+            b.setMousePressed(true);
+            break;
+         }
+   }
+
+   @Override
+   public void mouseReleased(MouseEvent e) {
+      for (Button b : buttons)
+         if (isIn(e, b)) {
+            if (b.getMousePressed()) b.applyGamestate();
+            break;
+         }
+      for (Button b : buttons) b.resetBooleans();
+   }
+
+   @Override
+   public void mouseMoved(MouseEvent e) {
+      for (Button b : buttons) b.setMouseOver(false);
+      
+      for (Button b : buttons) {
+         if (isIn(e, b)) {
+            b.setMouseOver(true);
+            break;
+         }
+      }      
+   }
+   
+}

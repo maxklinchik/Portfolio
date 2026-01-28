@@ -1,0 +1,143 @@
+//Max
+//Program Description:
+//May 9, 2025
+//
+package inputs;
+
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+
+import gamestates.Gamestate;
+import main.Panel;
+
+public class MouseInputs implements MouseListener, MouseMotionListener {
+   private Panel panel;
+
+   public MouseInputs(Panel panel) {
+      this.panel = panel;
+   }
+
+   @Override
+   public void mouseDragged(MouseEvent e) {
+      
+   }
+
+   @Override
+   public void mouseMoved(MouseEvent e) {
+      switch (Gamestate.gamestate) {
+      case MAIN_MENU : {
+         panel.getGame().getLevelManager().getMenu().mouseMoved(e); break;
+      }
+      case WIN_MENU : {
+         panel.getGame().getLevelManager().getWinMenu().mouseMoved(e); break;
+      }
+      case OPTIONS : {
+         panel.getGame().getLevelManager().getOptions().mouseMoved(e); break;
+      }
+      case LEVEL_CHOOSER : {
+         panel.getGame().getLevelManager().getLevelChooser().mouseMoved(e); break;
+      }
+      case LEVEL1 : {
+         panel.getGame().getLevelManager().getLevel1().mouseMoved(e); break;
+      }
+      case LEVEL2 : {
+         panel.getGame().getLevelManager().getLevel2().mouseMoved(e); break;
+      }
+      case LEVEL3 : {
+         panel.getGame().getLevelManager().getLevel3().mouseMoved(e); break;
+      }
+      case LEVEL4 : {
+         panel.getGame().getLevelManager().getLevel4().mouseMoved(e); break;
+      }
+      case LEVEL5 : {
+         panel.getGame().getLevelManager().getLevel5().mouseMoved(e); break;
+      }
+      default : break;
+      }
+   }
+
+   @Override
+   public void mouseClicked(MouseEvent e) {
+      
+   }
+
+   @Override
+   public void mousePressed(MouseEvent e) {
+      switch (Gamestate.gamestate) {
+      case MAIN_MENU : {
+         panel.getGame().getLevelManager().getMenu().mousePressed(e); break;
+      }
+      case WIN_MENU : {
+         panel.getGame().getLevelManager().getWinMenu().mousePressed(e); break;
+      }
+      case OPTIONS : {
+         panel.getGame().getLevelManager().getOptions().mousePressed(e); break;
+      }
+      case LEVEL_CHOOSER : {
+         panel.getGame().getLevelManager().getLevelChooser().mousePressed(e); break;
+      }
+      case LEVEL1 : {
+         panel.getGame().getLevelManager().getLevel1().mousePressed(e); break;
+      }
+      case LEVEL2 : {
+         panel.getGame().getLevelManager().getLevel2().mousePressed(e); break;
+      }
+      case LEVEL3 : {
+         panel.getGame().getLevelManager().getLevel3().mousePressed(e); break;
+      }
+      case LEVEL4 : {
+         panel.getGame().getLevelManager().getLevel4().mousePressed(e); break;
+      }
+      case LEVEL5 : {
+         panel.getGame().getLevelManager().getLevel5().mousePressed(e); break;
+      }
+      default : break;
+      }
+   }
+
+   @Override
+   public void mouseReleased(MouseEvent e) {
+      switch (Gamestate.gamestate) {
+      case MAIN_MENU : {
+         panel.getGame().getLevelManager().getMenu().mouseReleased(e); break;
+      }
+      case WIN_MENU : {
+         panel.getGame().getLevelManager().getWinMenu().mouseReleased(e); break;
+      }
+      case OPTIONS : {
+         panel.getGame().getLevelManager().getOptions().mouseReleased(e); break;
+      }
+      case LEVEL_CHOOSER : {
+         panel.getGame().getLevelManager().getLevelChooser().mouseReleased(e); break;
+      }
+      case LEVEL1 : {
+         panel.getGame().getLevelManager().getLevel1().mouseReleased(e); break;
+      }
+      case LEVEL2 : {
+         panel.getGame().getLevelManager().getLevel2().mouseReleased(e); break;
+      }
+      case LEVEL3 : {
+         panel.getGame().getLevelManager().getLevel3().mouseReleased(e); break;
+      }
+      case LEVEL4 : {
+         panel.getGame().getLevelManager().getLevel4().mouseReleased(e); break;
+      }
+      case LEVEL5 : {
+         panel.getGame().getLevelManager().getLevel5().mouseReleased(e); break;
+      }
+      default : break;
+      }
+   }
+
+   @Override
+   public void mouseEntered(MouseEvent e) {
+      
+   }
+
+   @Override
+   public void mouseExited(MouseEvent e) {
+      
+   }
+   
+}

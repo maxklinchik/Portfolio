@@ -1,0 +1,38 @@
+//Max
+//Program Description:
+//Jun 9, 2025
+//
+package entities;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class Confetti {
+   private int x, y, w, h;
+   private Color color;
+   private float speed;
+   private Color[] colorList = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.ORANGE, Color.MAGENTA};
+
+   public Confetti(float speed, int width, int height) {
+      this.speed = speed;
+      this.w = width;
+      this.h = height;
+      color = colorList[(int) (Math.random()*6)];
+      x = (int) (Math.random() * 1200);
+      y = -20;
+   }
+   
+   public void update() {
+      y += speed;
+   }
+   
+   public void render(Graphics g) {
+      g.setColor(color);
+      g.fillRect(x, y, w, h);
+   }
+   
+   public int getY() {
+      return y;
+   }
+   
+}

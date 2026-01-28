@@ -1,0 +1,25 @@
+//Max
+//Program Description:
+//May 8, 2025
+//
+package main;
+
+import java.awt.event.WindowFocusListener;
+
+import javax.swing.JFrame;
+
+public class Window extends JFrame {
+
+   public Window(Panel panel) {
+      JFrame frame = new JFrame();
+      
+      frame.setSize(Game.PANEL_WIDTH, Game.PANEL_HEIGHT);
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      frame.add(panel);
+      frame.setVisible(true);
+      frame.setLocationRelativeTo(null);
+      frame.setResizable(false);
+      frame.pack();
+   }
+   
+}

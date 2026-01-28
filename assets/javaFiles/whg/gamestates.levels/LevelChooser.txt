@@ -1,0 +1,96 @@
+//Max
+//Program Description:
+//May 8, 2025
+//
+package gamestates.levels;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+
+import gamestates.Gamestate;
+import gamestates.State;
+import gamestates.StateMethods;
+import main.Game;
+import ui.Button;
+
+public class LevelChooser extends StateMethods implements State {
+   private Button[] buttons;
+
+   public LevelChooser() {
+      buttons = new Button[6];
+      loadButtons();
+   }
+   
+   private void loadButtons() {
+      buttons[0] = new Button(400, 200, 60, 60, Gamestate.LEVEL1, "1");
+      buttons[1] = new Button(470, 200, 60, 60, Gamestate.LEVEL2, "2");
+      buttons[2] = new Button(540, 200, 60, 60, Gamestate.LEVEL3, "3");
+      buttons[3] = new Button(610, 200, 60, 60, Gamestate.LEVEL4, "4");
+      buttons[4] = new Button(680, 200, 60, 60, Gamestate.LEVEL5, "5");
+      buttons[5] = new Button(10, 10, 90, 40, Gamestate.MAIN_MENU, "Back");
+      buttons[1].setClickable(false);
+      buttons[2].setClickable(false);
+      buttons[3].setClickable(false);
+      buttons[4].setClickable(false);
+   }
+   
+   public void update() {
+      if (Level1.levelBeat) buttons[1].setClickable(true);
+      if (Level2.levelBeat) buttons[2].setClickable(true);
+      if (Level3.levelBeat) buttons[3].setClickable(true);
+      if (Level4.levelBeat) buttons[4].setClickable(true);
+      for (Button b : buttons) b.update();
+   }
+   
+   public void render(Graphics g) {
+      g.setColor(Color.GRAY);
+      g.fillRect(0, 0, 1200, 700);
+      for (Button b : buttons) b.render(g);
+   }
+
+   @Override
+   public void keyPressed(KeyEvent e) {
+//      if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+//         Gamestate.gamestate = Gamestate.LEVEL1;
+//      }
+   }
+
+   @Override
+   public void keyReleased(KeyEvent e) {
+      
+   }
+
+   @Override
+   public void mousePressed(MouseEvent e) {
+      for (Button b : buttons)
+         if (isIn(e, b) && b.getClickable()) {
+            b.setMousePressed(true);
+            break;
+         }
+   }
+
+   @Override
+   public void mouseReleased(MouseEvent e) {
+      for (Button b : buttons)
+         if (isIn(e, b)) {
+            if (b.getMousePressed() && b.getClickable()) b.applyGamestate();
+            break;
+         }
+      for (Button b : buttons) b.resetBooleans();
+   }
+
+   @Override
+   public void mouseMoved(MouseEvent e) {
+      for (Button b : buttons) b.setMouseOver(false);
+      
+      for (Button b : buttons) {
+         if (isIn(e, b) && b.getClickable()) {
+            b.setMouseOver(true);
+            break;
+         }
+      }      
+   }
+   
+}

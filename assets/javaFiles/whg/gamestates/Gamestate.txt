@@ -1,0 +1,13 @@
+//Max
+//Program Description:
+//May 8, 2025
+//
+package gamestates;
+
+public enum Gamestate {
+
+   MAIN_MENU, QUIT, WIN_MENU, LEVEL_CHOOSER, LEVEL1, LEVEL2, LEVEL3, LEVEL4, LEVEL5, OPTIONS;
+   
+   public static Gamestate gamestate = MAIN_MENU;
+   
+}

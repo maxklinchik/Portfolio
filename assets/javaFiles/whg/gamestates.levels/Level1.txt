@@ -1,0 +1,162 @@
+//Max
+//Program Description:
+//May 9, 2025
+//
+package gamestates.levels;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
+import entities.Barrier;
+import entities.Checkpoint;
+import entities.Player;
+import entities.Wall;
+import gamestates.Gamestate;
+import gamestates.LevelManager;
+import gamestates.State;
+import gamestates.StateMethods;
+import main.Game;
+import utilities.HelpMethods;
+
+public class Level1 extends StateMethods implements State {
+   private Player player;
+   private ArrayList<Barrier> barriers;
+   private ArrayList<Wall> walls;
+   private Checkpoint checkpoint;
+   private int checkpointTimer = 0;
+   public static boolean levelBeat = false;
+
+   public Level1() {
+      player = new Player(145, 345, 1.2f, 1.2f);
+      barriers = new ArrayList<Barrier>();
+      walls = new ArrayList<Wall>();
+      checkpoint = new Checkpoint(1100, 0, 100, 100);
+      addToWalls();
+      addToBarriers();
+   }
+   
+   public void update() {
+      //collision with barriers
+      for (int i = 0; i < barriers.size(); i++) {
+         if (HelpMethods.isIn(player.getBounds(), barriers.get(i).getBounds())) player.setToSpawn();
+         if (i == barriers.size()) continue;
+         if (barriers.get(i).getY() < 0) barriers.get(i).changeSignOfDy();
+         if (barriers.get(i).getY() + barriers.get(i).getH() > Game.PANEL_HEIGHT) barriers.get(i).changeSignOfDy();
+         if (barriers.get(i).getX() < 300) barriers.get(i).changeSignOfDx();
+         if (barriers.get(i).getX() + barriers.get(i).getW() > Game.PANEL_WIDTH) barriers.get(i).changeSignOfDx();
+      }
+      
+      if (barriers.get(barriers.size()-1).getX() + barriers.get(barriers.size()-1).getW() > 1100) barriers.get(barriers.size()-1).setX(300);
+      
+      //collision with walls
+      for (int i = 0; i < walls.size(); i++) {
+         player.setCanMoveDown(HelpMethods.checkForNoPlayerContactAboveWall(player.getBounds(), walls, 0));
+         player.setCanMoveUp(HelpMethods.checkForNoPlayerContactBelowWall(player.getBounds(), walls, 0));
+         player.setCanMoveRight(HelpMethods.checkForNoPlayerContactOnLeftOfWall(player.getBounds(), walls, 0));
+         player.setCanMoveLeft(HelpMethods.checkForNoPlayerContactOnRightOfWall(player.getBounds(), walls, 0));
+      }
+      
+      //player in checkpoint
+      if (HelpMethods.isIn(player.getBounds(), checkpoint.getBounds())) {
+         checkpointTimer++;
+         if (checkpointTimer > 300) {
+            LevelManager.changeToNextLevel();
+            levelBeat = true;
+         }
+      }
+      
+      player.update();
+      checkpoint.update();
+      for (int i = 0; i < barriers.size(); i++) barriers.get(i).update();
+      for (int i = 0; i < walls.size(); i++) walls.get(i).update();
+   }
+   
+   private void addToWalls() {
+      walls.add(new Wall(0, 0, 300, 300));
+      walls.add(new Wall(0, 400, 300, 300));
+   }
+   
+   private void addToBarriers() {
+      barriers.add(new Barrier(340, 310, 100, 80, 0, 6f));
+      barriers.add(new Barrier(460, 310, 100, 80, 0, -6f));
+      barriers.add(new Barrier(580, 310, 100, 80, 0, 6f));
+      barriers.add(new Barrier(700, 310, 100, 80, 0, -6f));
+      barriers.add(new Barrier(820, 310, 100, 80, 0, 6f));
+      barriers.add(new Barrier(940, 310, 100, 80, 0, -6f));
+      barriers.add(new Barrier(350, 0, 20, 700, 1.6f, 0));
+   }
+   
+   public void render(Graphics g) {
+      g.setColor(Color.LIGHT_GRAY);
+      g.fillRect(0, 0, 1200, 700);
+      player.render(g);
+      checkpoint.render(g);
+      for (int i = 0; i < barriers.size(); i++) barriers.get(i).renderSquare(g);
+      for (int i = 0; i < walls.size(); i++) walls.get(i).render(g);
+      
+      Game.drawDeaths(g);
+   }
+
+   @Override
+   public void keyPressed(KeyEvent e) {
+      if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+         Gamestate.gamestate = Gamestate.MAIN_MENU;
+      }
+      switch (e.getKeyCode()) {
+      case KeyEvent.VK_UP : {
+         player.setUp(true); break;
+      }
+      case KeyEvent.VK_DOWN : {
+         player.setDown(true); break;
+      }
+      case KeyEvent.VK_LEFT : {
+         player.setLeft(true); break;
+      }
+      case KeyEvent.VK_RIGHT : {
+         player.setRight(true); break;
+      }
+      default : break;
+      }
+   }
+
+   @Override
+   public void keyReleased(KeyEvent e) {
+      switch (e.getKeyCode()) {
+      case KeyEvent.VK_UP : {
+         player.setUp(false); break;
+      }
+      case KeyEvent.VK_DOWN : {
+         player.setDown(false); break;
+      }
+      case KeyEvent.VK_LEFT : {
+         player.setLeft(false); break;
+      }
+      case KeyEvent.VK_RIGHT : {
+         player.setRight(false); break;
+      }
+      default : break;
+      }
+   }
+
+   @Override
+   public void mousePressed(MouseEvent e) {
+      
+   }
+
+   @Override
+   public void mouseReleased(MouseEvent e) {
+      
+   }
+
+   @Override
+   public void mouseMoved(MouseEvent e) {
+      
+   }
+   
+   
+   
+}

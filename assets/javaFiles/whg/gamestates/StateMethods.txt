@@ -1,0 +1,27 @@
+//Max
+//Program Description:
+//May 9, 2025
+//
+package gamestates;
+
+import java.awt.event.MouseEvent;
+
+import entities.Barrier;
+import entities.Player;
+import ui.Button;
+
+public class StateMethods {
+
+   public StateMethods() {
+      
+   }
+   
+   public boolean isIn(MouseEvent e, Button b) {
+      return b.getBounds().contains(e.getX(), e.getY());
+   }
+   
+   public boolean isIn(Player player, Barrier barrier) {
+      return player.getBounds().contains(barrier.getBounds());
+   }
+   
+}

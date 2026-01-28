@@ -1,0 +1,111 @@
+//Max
+//Program Description:
+//May 9, 2025
+//
+package inputs;
+
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import gamestates.Gamestate;
+import main.Panel;
+
+public class KeyboardInputs implements KeyListener {
+   private Panel panel;
+
+   public KeyboardInputs(Panel panel) {
+      this.panel = panel;
+   }
+
+   @Override
+   public void keyTyped(KeyEvent e) {
+      
+   }
+
+   @Override
+   public void keyPressed(KeyEvent e) {
+      switch (Gamestate.gamestate) {
+      case MAIN_MENU : {
+         panel.getGame().getLevelManager().getMenu().keyPressed(e);
+         break;
+      }
+      case WIN_MENU : {
+         panel.getGame().getLevelManager().getWinMenu().keyPressed(e);
+         break;
+      }
+      case OPTIONS : {
+         panel.getGame().getLevelManager().getOptions().keyPressed(e);
+         break;
+      }
+      case LEVEL_CHOOSER : {
+         panel.getGame().getLevelManager().getLevelChooser().keyPressed(e);
+         break;
+      }
+      case LEVEL1 : {
+         panel.getGame().getLevelManager().getLevel1().keyPressed(e);
+         break;
+      }
+      case LEVEL2 : {
+         panel.getGame().getLevelManager().getLevel2().keyPressed(e);
+         break;
+      }
+      case LEVEL3 : {
+         panel.getGame().getLevelManager().getLevel3().keyPressed(e);
+         break;
+      }
+      case LEVEL4 : {
+         panel.getGame().getLevelManager().getLevel4().keyPressed(e);
+         break;
+      }
+      case LEVEL5 : {
+         panel.getGame().getLevelManager().getLevel5().keyPressed(e);
+         break;
+      }
+      default: break;
+      }
+   }
+
+   @Override
+   public void keyReleased(KeyEvent e) {
+      switch (Gamestate.gamestate) {
+      case MAIN_MENU : {
+         panel.getGame().getLevelManager().getMenu().keyReleased(e);
+         break;
+      }
+      case WIN_MENU : {
+         panel.getGame().getLevelManager().getWinMenu().keyReleased(e);
+         break;
+      }
+      case OPTIONS : {
+         panel.getGame().getLevelManager().getOptions().keyReleased(e);
+         break;
+      }
+      case LEVEL_CHOOSER : {
+         panel.getGame().getLevelManager().getLevelChooser().keyReleased(e);
+         break;
+      }
+      case LEVEL1 : {
+         panel.getGame().getLevelManager().getLevel1().keyReleased(e);
+         break;
+      }
+      case LEVEL2 : {
+         panel.getGame().getLevelManager().getLevel2().keyReleased(e);
+         break;
+      }
+      case LEVEL3 : {
+         panel.getGame().getLevelManager().getLevel3().keyReleased(e);
+         break;
+      }
+      case LEVEL4 : {
+         panel.getGame().getLevelManager().getLevel4().keyReleased(e);
+         break;
+      }
+      case LEVEL5 : {
+         panel.getGame().getLevelManager().getLevel5().keyReleased(e);
+         break;
+      }
+      default: break;
+      }
+   }
+   
+}

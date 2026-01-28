@@ -1,0 +1,175 @@
+//Max
+//Program Description:
+//May 8, 2025
+//
+package gamestates;
+
+import java.awt.Graphics;
+
+import gamestates.levels.Level1;
+import gamestates.levels.Level2;
+import gamestates.levels.Level3;
+import gamestates.levels.Level4;
+import gamestates.levels.Level5;
+import gamestates.levels.LevelChooser;
+
+public class LevelManager {
+   private Menu menu;
+   private WinMenu winMenu;
+   private LevelChooser levelChooser;
+   private Level1 level1;
+   private Level2 level2;
+   private Level3 level3;
+   private Level4 level4;
+   private Level5 level5;
+   private Options options;
+
+   public LevelManager() {
+      initClasses();
+   }
+   
+   private void initClasses() {
+      menu = new Menu();
+      winMenu = new WinMenu();
+      levelChooser = new LevelChooser();
+      level1 = new Level1();
+      level2 = new Level2();
+      level3 = new Level3();
+      level4 = new Level4();
+      level5 = new Level5();
+      options = new Options();
+   }
+   
+   public void update() {
+      switch (Gamestate.gamestate) {
+      case MAIN_MENU : {
+         menu.update();
+         break;
+      }
+      case WIN_MENU : {
+         winMenu.update();
+         break;
+      }
+      case OPTIONS : {
+         options.update();
+         break;
+      }
+      case LEVEL_CHOOSER : {
+         levelChooser.update();
+         break;
+      }
+      case LEVEL1 : {
+         level1.update();
+         break;
+      }
+      case LEVEL2 : {
+         level2.update();
+         break;
+      }
+      case LEVEL3 : {
+         level3.update();
+         break;
+      }
+      case LEVEL4 : {
+         level4.update();
+         break;
+      }
+      case LEVEL5 : {
+         level5.update();
+         break;
+      }
+      case QUIT : {
+         System.exit(0);
+      }
+      default:
+         break;
+      }
+   }
+   
+   public void render(Graphics g) {
+      switch (Gamestate.gamestate) {
+      case MAIN_MENU : {
+         menu.render(g);
+         break;
+      }
+      case WIN_MENU : {
+         winMenu.render(g);
+         break;
+      }
+      case OPTIONS : {
+         options.render(g);
+         break;
+      }
+      case LEVEL_CHOOSER : {
+         levelChooser.render(g);
+         break;
+      }
+      case LEVEL1 : {
+         level1.render(g);
+         break;
+      }
+      case LEVEL2 : {
+         level2.render(g);
+         break;
+      }
+      case LEVEL3 : {
+         level3.render(g);
+         break;
+      }
+      case LEVEL4 : {
+         level4.render(g);
+         break;
+      }
+      case LEVEL5 : {
+         level5.render(g);
+         break;
+      }
+      default:
+         break;
+      }
+   }
+   
+   public static void changeToNextLevel() {
+      if (Gamestate.gamestate == Gamestate.LEVEL1) Gamestate.gamestate = Gamestate.LEVEL2;
+      else if (Gamestate.gamestate == Gamestate.LEVEL2) Gamestate.gamestate = Gamestate.LEVEL3;
+      else if (Gamestate.gamestate == Gamestate.LEVEL3) Gamestate.gamestate = Gamestate.LEVEL4;
+      else if (Gamestate.gamestate == Gamestate.LEVEL4) Gamestate.gamestate = Gamestate.LEVEL5;
+      else if (Gamestate.gamestate == Gamestate.LEVEL5) Gamestate.gamestate = Gamestate.WIN_MENU;
+   }
+   
+   public Menu getMenu() {
+      return menu;
+   }
+   
+   public WinMenu getWinMenu() {
+      return winMenu;
+   }
+   
+   public LevelChooser getLevelChooser() {
+      return levelChooser;
+   }
+   
+   public Level1 getLevel1() {
+      return level1;
+   }
+   
+   public Level2 getLevel2() {
+      return level2;
+   }
+   
+   public Level3 getLevel3() {
+      return level3;
+   }
+   
+   public Level4 getLevel4() {
+      return level4;
+   }
+   
+   public Level5 getLevel5() {
+      return level5;
+   }
+   
+   public Options getOptions() {
+      return options;
+   }
+}

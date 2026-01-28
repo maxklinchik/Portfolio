@@ -1,0 +1,111 @@
+//Max
+//Program Description:
+//May 8, 2025
+//
+package gamestates;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
+import entities.Confetti;
+import gamestates.levels.Level1;
+import gamestates.levels.Level2;
+import gamestates.levels.Level3;
+import gamestates.levels.Level4;
+import main.Game;
+import ui.Button;
+
+public class WinMenu extends StateMethods implements State {
+   private Button[] buttons = new Button[1];
+   private ArrayList<Confetti> confetti;
+   private int confettiTimer;
+
+   public WinMenu() {
+      loadButtons();
+      confetti = new ArrayList<Confetti>();
+   }
+   
+   private void loadButtons() {
+      buttons[0] = new Button(Game.PANEL_WIDTH/2 - 105, 500, 180, 60, Gamestate.MAIN_MENU, "Play Again");
+   }
+   
+   public void update() {
+      confettiTimer++;
+      if (confettiTimer > 10) {
+         confetti.add(new Confetti((float) (Math.random() + 1), 8, 8));
+         confettiTimer = 0;
+      }
+      for (Button b : buttons) b.update();
+      for (int i = 0; i < confetti.size(); i++) {
+         confetti.get(i).update();
+         if (confetti.get(i).getY() > 700) confetti.remove(i);
+      }
+   }
+   
+   public void render(Graphics g) {
+      g.setFont(new Font("Cooper Black", Font.BOLD, 100));
+      g.setColor(Color.LIGHT_GRAY);
+      g.fillRect(0, 0, 1200, 700);
+      g.setColor(Color.BLACK);
+      g.drawString("You Win!!", 340, 140);
+      for (Button b : buttons) b.render(g);
+      for (int i = 0; i < confetti.size(); i++) confetti.get(i).render(g);
+      
+      Game.drawDeaths(g);
+   }
+
+   @Override
+   public void keyPressed(KeyEvent e) {
+//      if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+//         Gamestate.gamestate = Gamestate.LEVEL1;
+//      }
+   }
+
+   @Override
+   public void keyReleased(KeyEvent e) {
+      
+   }
+
+   @Override
+   public void mousePressed(MouseEvent e) {
+      for (Button b : buttons)
+         if (isIn(e, b)) {
+            b.setMousePressed(true);
+            break;
+         }
+   }
+
+   @Override
+   public void mouseReleased(MouseEvent e) {
+      for (Button b : buttons)
+         if (isIn(e, b)) {
+            if (b.getMousePressed()) {
+               b.applyGamestate();
+               Level1.levelBeat = false;
+               Level2.levelBeat = false;
+               Level3.levelBeat = false;
+               Level4.levelBeat = false;
+               Game.deaths = 0;
+            }
+            break;
+         }
+      for (Button b : buttons) b.resetBooleans();
+   }
+
+   @Override
+   public void mouseMoved(MouseEvent e) {
+      for (Button b : buttons) b.setMouseOver(false);
+      
+      for (Button b : buttons) {
+         if (isIn(e, b)) {
+            b.setMouseOver(true);
+            break;
+         }
+      }      
+   }
+   
+}

@@ -1,0 +1,39 @@
+//Max
+//Program Description:
+//May 19, 2025
+//
+package entities;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+
+public class Checkpoint {
+   private float x, y;
+   private int w, h;
+   private Rectangle.Float hitbox;
+
+   public Checkpoint(float x, float y, int width, int height) {
+      this.x = x;
+      this.y = y;
+      this.w = width;
+      this.h = height;
+      hitbox = new Rectangle.Float(x, y, w, h);
+   }
+   
+   public void update() {
+      hitbox = new Rectangle.Float(x, y, w, h);
+   }
+   
+   public void render(Graphics g) {
+      g.setColor(new Color(0f, 0.6f, 0f, 0.5f));
+      g.fillRect((int) x, (int) y, w, h);
+      g.setColor(new Color(0.3f, 0.9f, 0.1f, 0.5f));
+      g.fillRect((int) x + 3, (int) y + 3, w - 6, h - 6);
+   }
+   
+   public Rectangle.Float getBounds() {
+      return hitbox;
+   }
+   
+}

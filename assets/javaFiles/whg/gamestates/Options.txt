@@ -1,0 +1,128 @@
+//Max
+//Program Description:
+//May 8, 2025
+//
+package gamestates;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
+import entities.Barrier;
+import entities.Player;
+import gamestates.Gamestate;
+import main.Game;
+import ui.Button;
+
+public class Options extends StateMethods implements State {
+   private Button[] buttons = new Button[1];
+   private Button colorButton;
+   private Button barrierColorButton;
+   private Color[] colors = {Color.ORANGE, Color.YELLOW, Color.GREEN, Color.CYAN, Color.BLUE, Color.MAGENTA, Color.RED};
+   private int colorListIndex = 0;
+   private int barrierColorListIndex = 0;
+
+   public Options() {
+      loadButtons();
+      colorButton = new Button(Game.PANEL_WIDTH/2 - 195, 100, 340, 60, "Change Player Color");
+      barrierColorButton = new Button(Game.PANEL_WIDTH/2 - 195, 170, 340, 60, "Change Barrier Color");
+   }
+   
+   private void loadButtons() {
+      buttons[0] = new Button(10, 10, 90, 40, Gamestate.MAIN_MENU, "Back");
+   }
+   
+   public void update() {
+      for (Button b : buttons) b.update();
+      colorButton.update();
+      barrierColorButton.update();
+   }
+   
+   public void render(Graphics g) {
+      g.setColor(Color.GRAY);
+      g.fillRect(0, 0, 1200, 700);
+      for (Button b : buttons) b.render(g);
+      colorButton.render(g);
+      barrierColorButton.render(g);
+      drawRect(g, Player.color, Game.PANEL_WIDTH/2 + 155, 100, 60, 60);
+      drawRect(g, Barrier.color, Game.PANEL_WIDTH/2 + 155, 170, 60, 60);
+   }
+   
+   private void drawRect(Graphics g, Color c, int x, int y, int w, int h) {
+      g.setColor(Color.BLACK);
+      g.fillRect(x, y, w, h);
+      g.setColor(c);
+      g.fillRect(x + 4, y + 4, w - 8, h - 8);
+   }
+
+   @Override
+   public void keyPressed(KeyEvent e) {
+//      if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+//         Gamestate.gamestate = Gamestate.LEVEL1;
+//      }
+   }
+
+   @Override
+   public void keyReleased(KeyEvent e) {
+      
+   }
+
+   @Override
+   public void mousePressed(MouseEvent e) {
+      for (Button b : buttons)
+         if (isIn(e, b)) {
+            b.setMousePressed(true);
+            break;
+         }
+      if (isIn(e, colorButton)) colorButton.setMousePressed(true);
+      
+      if (isIn(e, barrierColorButton)) barrierColorButton.setMousePressed(true);
+   }
+
+   @Override
+   public void mouseReleased(MouseEvent e) {
+      for (Button b : buttons)
+         if (isIn(e, b)) {
+            if (b.getMousePressed()) b.applyGamestate();
+            break;
+         }
+      for (Button b : buttons) b.resetBooleans();
+      
+      if (isIn(e, colorButton))
+         if (colorButton.getMousePressed()) {
+            Player.color = colors[colorListIndex];
+            colorListIndex++;
+            if (colorListIndex == colors.length) colorListIndex = 0;
+         }
+      colorButton.resetBooleans();
+      
+      if (isIn(e, barrierColorButton))
+         if (barrierColorButton.getMousePressed()) {
+            Barrier.color = colors[barrierColorListIndex];
+            barrierColorListIndex++;
+            if (barrierColorListIndex == colors.length) barrierColorListIndex = 0;
+         }
+      barrierColorButton.resetBooleans();
+   }
+
+   @Override
+   public void mouseMoved(MouseEvent e) {
+      for (Button b : buttons) b.setMouseOver(false);
+      
+      for (Button b : buttons) {
+         if (isIn(e, b)) {
+            b.setMouseOver(true);
+            break;
+         }
+      } 
+      
+      colorButton.setMouseOver(false);
+      if (isIn(e, colorButton)) colorButton.setMouseOver(true);
+      
+      barrierColorButton.setMouseOver(false);
+      if (isIn(e, barrierColorButton)) barrierColorButton.setMouseOver(true);
+   }
+   
+}
