@@ -1,6 +1,6 @@
 # Portfolio Website
 
-🌐 **[View Live Website]([https://your-website-url.com](https://maxklinchik.github.io/Portfolio/))**
+🌐 **[View Live Website]((https://maxklinchik.github.io/Portfolio/))**
 
 ---
 
